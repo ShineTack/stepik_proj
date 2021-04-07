@@ -48,7 +48,7 @@ namespace MyPhotoshop
         public void LoadBitmap(Bitmap bmp)
         {
             originalBmp = bmp;
-            originalPhoto = Convertors.Bitmap2Photo(bmp);
+            originalPhoto = (Photo)bmp;
 
             original.Image = originalBmp;
             original.Left = 0;
@@ -133,8 +133,8 @@ namespace MyPhotoshop
 			var data=parametersControls.Select(z=>(double)z.Value).ToArray();
 			var filter=(IFilter)filtersSelect.SelectedItem;
 			Photo result=null;
-     		result=filter.Process(originalPhoto,data);
-	        var resultBmp=Convertors.Photo2Bitmap(result);
+     		result=filter.Process(originalPhoto, data);
+	        var resultBmp = result;
 			if (resultBmp.Width>originalBmp.Width || resultBmp.Height>originalBmp.Height)
 			{
                 float k = Math.Min((float)originalBmp.Width / resultBmp.Width, (float)originalBmp.Height / resultBmp.Height);
@@ -143,10 +143,10 @@ namespace MyPhotoshop
 				{
 					g.DrawImage(resultBmp, new Rectangle(0, 0, newBmp.Width, newBmp.Height), new Rectangle(0, 0, resultBmp.Width, resultBmp.Height), GraphicsUnit.Pixel);
 				}
-				resultBmp = newBmp;
+				resultBmp = (Photo)newBmp;
 			}
 				
-			processed.Image=resultBmp;
+			processed.Image = resultBmp;
 		}
 
         
